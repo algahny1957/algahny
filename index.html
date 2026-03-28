@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تراث عائلة آل غني 🌴</title>
+    <style>
+        :root { --trunk: #5d4037; --leaf: #2e7d32; --bg: #fffde7; --gold: #d4af37; }
+        body { margin: 0; background: var(--bg); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; text-align: center; }
+        
+        /* شاشة الدخول */
+        #access-screen { position: fixed; inset: 0; background: var(--bg); z-index: 3000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
+        .btn-start { background: var(--trunk); color: white; padding: 20px 40px; border-radius: 50px; border: none; font-size: 22px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.3s; }
+        
+        /* حاوية الشجرة */
+        #tree-wrapper { display: none; padding: 40px 10px; opacity: 0; transition: 1.5s; }
+        .tree-container { position: relative; display: flex; flex-direction: column; align-items: center; }
+        
+        /* الجذع */
+        .main-trunk { width: 12px; height: 0; background: var(--trunk); transition: 4s ease-out; position: relative; margin-top: 20px; border-radius: 10px; }
+        .main-trunk.grow { height: 1100px; }
+
+        /* الأجيال */
+        .generation { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 45px; opacity: 0; transform: translateY(30px); transition: 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 100%; }
+        .generation.show { opacity: 1; transform: translateY(0); }
+
+        /* كرت الاسم */
+        .member-card { background: white; padding: 15px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.08); border: 2px solid var(--trunk); min-width: 150px; position: relative; }
+        .grand { background: var(--gold); color: white; border: none; font-size: 22px; width: 85%; max-width: 450px; }
+        .parent { border-color: var(--leaf); border-width: 3px; }
+        .kids-box { font-size: 13px; color: #444; margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px; line-height: 1.6; }
+        
+        .deceased { color: #888; text-decoration: line-through; }
+        .wife { font-size: 14px; color: #2e7d32; font-weight: bold; display: block; margin-top: 3px; }
+        b { color: #d32f2f; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="access-screen">
+        <h1 style="color: var(--trunk); font-size: 28px;">شجرة عائلة آل غني 🌴</h1>
+        <p style="color: #5d4037; font-weight: bold;">مرحباً بك في السجل التاريخي</p>
+        <button class="btn-start" onclick="verifyAccess()">دخول بوابة التراث 🔑</button>
+    </div>
+
+    <div id="tree-wrapper">
+        <div class="tree-container">
+            <h2 style="color: var(--trunk); margin-bottom: 35px;">نسب آل غني الشريف</h2>
+            
+            <div class="generation" id="gen1">
+                <div class="member-card grand">الجد: غني ❤️ الجدة: سميرة</div>
+            </div>
+
+            <div class="generation" id="gen2">
+                <div class="member-card parent">عماد <span class="wife">(ضمياء)</span><div class="kids-box">سيف (أُميمة)، يوسف، أحمد، نوارس</div></div>
+                <div class="member-card parent">إياد <span class="wife">(إسراء)</span><div class="kids-box">علي، بنين، <span class="deceased">رحمة 🕊️</span>، روان، عباس</div></div>
+                <div class="member-card parent" style="border-color: #ff9800;">نهاد <span class="wife">(آلاء)</span><div class="kids-box">حسين، <b>ولاء</b>، عباس، ريتاج</div></div>
+                <div class="member-card parent">إيناس <span class="wife">(قائد)</span><div class="kids-box">آية، أحمد، رسول</div></div>
+                <div class="member-card parent">فؤاد <span class="wife">(أسماء)</span><div class="kids-box">جاسم، إبراهيم، غزل</div></div>
+            </div>
+
+            <div class="main-trunk" id="trunk"></div>
+        </div>
+    </div>
+
+    <script>
+        function verifyAccess() {
+            let pass = prompt("أدخل رمز العائلة الخاص (1957 أو 1962):");
+            
+            if (pass === "1957" || pass === "1962") {
+                // تشغيل الموسيقى
+                document.getElementById('bgMusic').play().catch(e => console.log("تحتاج تفاعل"));
+                unlock();
+            } else {
+                alert("الرمز غير صحيح، الموقع خاص بالعائلة فقط.");
+            }
+        }
+
+        function unlock() {
+            document.getElementById('access-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('access-screen').style.display = 'none';
+                document.getElementById('tree-wrapper').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('tree-wrapper').style.opacity = '1';
+                    document.getElementById('trunk').classList.add('grow');
+                    showGenerations();
+                }, 100);
+            }, 800);
+        }
+
+        function showGenerations() {
+            setTimeout(() => document.getElementById('gen1').classList.add('show'), 1500);
+            setTimeout(() => document.getElementById('gen2').classList.add('show'), 3500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تراث آل غني 🌴</title>
+    <style>
+        body { 
+            margin: 0; background: #f4f1ea; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            overflow-x: hidden; color: #3e2723;
+        }
+
+        /* شاشة الدخول */
+        #access-screen { 
+            position: fixed; inset: 0; background: #3e2723; z-index: 3000; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: #d4af37;
+            transition: 0.8s;
+        }
+        .btn-start { 
+            background: #d4af37; color: #3e2723; padding: 15px 40px; border-radius: 50px; 
+            border: none; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 20px;
+        }
+
+        /* حاوية الشجرة */
+        #tree-wrapper { display: none; padding-top: 50px; opacity: 0; transition: 1s; }
+
+        .tree-scene {
+            position: relative; max-width: 600px; margin: 0 auto; min-height: 1000px;
+        }
+
+        .palm-icon {
+            font-size: 150px; position: absolute; top: 0; left: 50%;
+            transform: translateX(-50%); z-index: 1; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+        }
+
+        .trunk-line {
+            width: 12px; height: 0; background: linear-gradient(#2e7d32, #5d4037);
+            position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+            border-radius: 10px; transition: 3s ease-out;
+        }
+        .trunk-line.grow { height: 850px; }
+
+        .grand-box {
+            position: absolute; top: 140px; left: 50%; transform: translateX(-50%);
+            background: #d4af37; color: #fff; padding: 15px 25px; border-radius: 30px;
+            font-size: 22px; font-weight: bold; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0; transition: 1s;
+        }
+
+        .family-branch {
+            position: absolute; width: 180px; opacity: 0; transition: 1s; z-index: 10;
+        }
+
+        .family-card {
+            background: #fff; border: 2px solid #5d4037; border-radius: 15px;
+            padding: 12px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .family-card h3 { margin: 0; font-size: 17px; color: #5d4037; }
+        .ring { color: #d4af37; font-size: 14px; }
+
+        .kids-drawer {
+            max-height: 0; overflow: hidden; transition: 0.5s;
+            font-size: 13px; text-align: right; border-top: 1px dashed #ccc; margin-top: 8px;
+        }
+        .family-branch.active .kids-drawer { max-height: 250px; padding-top: 8px; }
+
+        /* مواقع الأغصان */
+        .f1 { top: 250px; right: 30px; } 
+        .f2 { top: 390px; left: 30px; }  
+        .f3 { top: 530px; right: 30px; } 
+        .f4 { top: 670px; left: 30px; }  
+        .f5 { top: 810px; right: 30px; } 
+
+        .show { opacity: 1 !important; }
+        b { color: #c62828; }
+        .deceased { color: #aaa; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
+
+    <div id="access-screen">
+        <h1 style="font-size: 32px; margin-bottom: 5px;">سجل آل غني 🌴</h1>
+        <p style="opacity: 0.8;">مرحباً بك في بوابة التراث العائلي</p>
+        <button class="btn-start" onclick="checkPass()">دخول 🔑</button>
+    </div>
+
+    <div id="tree-wrapper">
+        <div class="tree-scene">
+            <div class="palm-icon">🌴</div>
+            <div class="trunk-line" id="trunk"></div>
+
+            <div class="grand-box" id="grand">غني <span class="ring">💍</span> سميرة</div>
+
+            <div class="family-branch f1" id="b1" onclick="this.classList.toggle('active')">
+                <div class="family-card">
+                    <h3>عماد <span class="ring">💍</span> ضمياء</h3>
+                    <div class="kids-drawer">سيف <span class="ring">💍</span> أُميمة، يوسف، أحمد، نوارس</div>
+                </div>
+            </div>
+
+            <div class="family-branch f2" id="b2" onclick="this.classList.toggle('active')">
+                <div class="family-card">
+                    <h3>إياد <span class="ring">💍</span> إسراء</h3>
+                    <div class="kids-drawer">علي، بنين، <span class="deceased">رحمة 🕊️</span>، <span class="deceased">يزن 🕊️</span>، روان، عباس</div>
+                </div>
+            </div>
+
+            <div class="family-branch f3" id="b3" onclick="this.classList.toggle('active')">
+                <div class="family-card" style="border-color: #d4af37; border-width: 3px;">
+                    <h3>نهاد <span class="ring">💍</span> آلاء</h3>
+                    <div class="kids-drawer">حسين، <b>ولاء (المطور)</b>، عباس، ريتاج</div>
+                </div>
+            </div>
+
+            <div class="family-branch f4" id="b4" onclick="this.classList.toggle('active')">
+                <div class="family-card">
+                    <h3>إيناس <span class="ring">💍</span> قائد</h3>
+                    <div class="kids-drawer">آية، أحمد، رسول</div>
+                </div>
+            </div>
+
+            <div class="family-branch f5" id="b5" onclick="this.classList.toggle('active')">
+                <div class="family-card">
+                    <h3>فؤاد <span class="ring">💍</span> أسماء</h3>
+                    <div class="kids-drawer">جاسم، إبراهيم، غزل</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPass() {
+            // الآن لا توجد أرقام مكتوبة في الرسالة، فقط سؤال مفتوح
+            let p = prompt("أدخل رمز العائلة الخاص للدخول:");
+            if(p === "1957" || p === "1962") {
+                document.getElementById('bgMusic').play().catch(e => console.log("الصوت مفعل"));
+                startTree();
+            } else { 
+                alert("الرمز غير صحيح.. هذا السجل خاص بعائلة آل غني فقط."); 
+            }
+        }
+
+        function startTree() {
+            document.getElementById('access-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('access-screen').style.display = 'none';
+                document.getElementById('tree-wrapper').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('tree-wrapper').classList.add('show');
+                    document.getElementById('trunk').classList.add('grow');
+                    setTimeout(() => document.getElementById('grand').classList.add('show'), 1500);
+                    for(let i=1; i<=5; i++) {
+                        setTimeout(() => document.getElementById('b'+i).classList.add('show'), 2000 + (i*500));
+                    }
+                }, 100);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
